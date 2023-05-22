@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link href="admin.css" rel="stylesheet" type="text/css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Page</title>
+</head>
+<body>
+  <h1>Welcome, Admin!</h1>
+
+  <button id="logoutBtn">Logout</button>
+
+  <button id="goToImportsBtn">Go to Imports</button>
+  <button id="goToExportsBtn">Go to Exports</button>
+
+  <h2>Add Import/Export</h2>
+
+  <form id="addForm">
+    <label for="productName">Product Name</label>
+    <input type="text" id="productName" required>
+
+    <label for="quantity">Quantity</label>
+    <input type="number" id="quantity" required>
+
+    <input type="submit" value="Add Import">
+    <input type="submit" value="Add Export">
+
+  </form>
+
+  <h2>Import/Export List</h2>
+
+  <ul id="importList">
+    <!-- List items will be dynamically added here -->
+  </ul>
+
+  <script>
+    // Logout functionality
+    var logoutBtn = document.getElementById("logoutBtn");
+    logoutBtn.addEventListener("click", function() {
+      window.location.href = "login.html"; // Redirect to login page
+    });
+
+    // Go to Imports functionality
+    var goToImportsBtn = document.getElementById("goToImportsBtn");
+    goToImportsBtn.addEventListener("click", function() {
+      window.location.href = "import.html"; // Redirect to import page
+    });
+
+
+    var goToImportsBtn = document.getElementById("goToExportsBtn");
+    goToImportsBtn.addEventListener("click", function() {
+      window.location.href = "export.html"; // Redirect to import page
+    });
+
+    // Add Import/Export functionality
+    var addForm = document.getElementById("addForm");
+    var importList = document.getElementById("importList");
+    var ExportList = document.getElementById("ExportList");
+
+    addForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      var productName = document.getElementById("productName").value;
+      var quantity = document.getElementById("quantity").value;
+
+      // Create new list item
+      var listItem = document.createElement("li");
+      listItem.textContent = "Product: " + productName + ", Quantity: " + quantity;
+
+      // Add the list item to the import list
+      importList.appendChild(listItem);
+
+      // Store the product in Local Storage
+      var products = JSON.parse(localStorage.getItem("products")) || [];
+      var product = {
+        name: productName,
+        quantity: quantity
+      };
+      products.push(product);
+      localStorage.setItem("products", JSON.stringify(products));
+
+      // Clear the form inputs
+      document.getElementById("productName").value = "";
+      document.getElementById("quantity").value = "";
+    });
+  </script>
+</body>
+</html>
+
